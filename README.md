@@ -13,12 +13,12 @@ Uniform Cost Search operates by expanding the node with the smallest cost every 
 ## A* Misplaced Tile
 The A* Misplaced Tile heuristic calculates the number of tiles not in their correct position relative to the goal state (excluding tile zero), using this count as the heuristic.
 
-Current State:
+Current State: \
 A	N	G \
 E	L	I \
 C	.	A \
 
-Goal State:
+Goal State: \
 A	N	G \
 E	L	I \
 C	A	. \
@@ -28,12 +28,12 @@ As illustrated in the referenced current/goal states, when comparing the current
 ## A* Manhattan Distance
 The A* Manhattan Distance heuristic measures the total distance each tile (excluding tile zero) must travel to reach its correct location in the goal state. This is conceptually similar to the A* Misplaced Tile heuristic but provides a more nuanced estimate for larger future expansions.
  
-Current State:
+Current State: \
 G	N	A \
 E	L	I \
 C	A	. \
 
-Goal State:
+Goal State: \
 A	N	G \
 E	L	I \
 C	A	. \

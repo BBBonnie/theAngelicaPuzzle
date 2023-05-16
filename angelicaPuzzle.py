@@ -1,9 +1,7 @@
-import time
 import copy
-import sys
 import heapq
 
-
+# code modified based on the eight puzzle
 def main():
     global puzzle, GOAL
 
@@ -17,6 +15,7 @@ def main():
 
     # custom puzzle
     elif choice == 2:
+        GOAL = [['A', 'N', 'G'], ['E', 'L', 'I'], ['C', 'A', '.']]  # goal state
         print_puzzle_creation_rules()
         puzzle = get_custom_puzzle_from_user()
 
@@ -39,9 +38,9 @@ def get_user_choice():
 def select_default_puzzle():
     # puzzle = ([['A', 'N', 'G'], ['E', 'L', 'I'], ['C', '.', 'A']])  # sample on book
     # puzzle = ([['A', 'N', 'G'], ['E', 'L', 'I'], ['C', 'A', '.']])  # depth 0
-    # puzzle = (['A', 'N', 'G'], ['E', 'L', 'I'], ['.', 'C', 'A'])  # depth 2
+    puzzle = (['A', 'N', 'G'], ['E', 'L', 'I'], ['.', 'C', 'A'])  # depth 2
     # puzzle = (['A', 'N', 'G'], ['L', '.', 'I'], ['E', 'C', 'A'])  # depth 4
-    puzzle = (['A', 'G', 'I'], ['L', '.', 'N'], ['E', 'C', 'A'])  # depth 8
+    # puzzle = (['A', 'G', 'I'], ['L', '.', 'N'], ['E', 'C', 'A'])  # depth 8
     # puzzle = (['A', 'G', 'I'], ['L', '.', 'C'], ['E', 'A', 'N'])  # depth 12
     # puzzle = (['A', 'I', 'C'], ['L', '.', 'G'], ['E', 'A', 'N'])  # depth 16
     # puzzle = (['C', 'A', 'N'], ['E', 'A', 'L'], ['I', 'G', '.'])  # depth 20
@@ -56,11 +55,8 @@ def print_puzzle_creation_rules():
 
 # custom puzzle
 def get_custom_puzzle_from_user():
-    # first row
     row1 = input('First row: ')
-    # second row
     row2 = input('Second row: ')
-    # third row
     row3 = input('Third row: ')
 
     # split all 3 rows by spaces
@@ -79,14 +75,14 @@ def get_user_algorithm_choice():
     return int(algoChoice)
 
 
-# return the number of misplaced tiles
+# return number of misplaced tiles
 def misplacedTiles(puzzle):
     misplaceCount = 0
     # iterate through each tile
     for i in range(len(puzzle)):
         for j in range(len(puzzle)):
-            # if current tile is different from goal then it's misplaced
-            # also we dont count blank space as misplaced
+            # it's misplaced when current tile is different from goal
+            # we don't count blank space as misplaced
             if puzzle[i][j] != GOAL[i][j] and puzzle[i][j] != '.':
                 misplaceCount += 1
 
@@ -115,7 +111,7 @@ def manhattanDistance(state):
                             # append Manhattan distance
                             distances.append(abs(goal_i - i) + abs(goal_j - j))
 
-                # print(f"Distances for tile {state[i][j]}: {distances}")  # Debug print
+                # print(f"Distances for tile {state[i][j]}: {distances}")   
                 min_distance = min(distances)
                 total_distance += min_distance
                 duplicate_counter += distances.count(min_distance) - 1
@@ -125,46 +121,46 @@ def manhattanDistance(state):
 
 # return new puzzle that blank tile has been moved up
 def moveUp(p, row, col):
-    newPuzzle = copy.deepcopy(p)
+    np = copy.deepcopy(p)
 
-    temp = newPuzzle[row][col]
-    newPuzzle[row][col] = newPuzzle[row - 1][col]  # moving up
-    newPuzzle[row - 1][col] = temp  # swapping
+    temp = np[row][col]
+    np[row][col] = np[row - 1][col]  # moving up
+    np[row - 1][col] = temp  # swapping
 
-    return newPuzzle
+    return np
 
 
 # return new puzzle that blank tile has been moved down
 def moveDown(p, row, col):
-    newPuzzle = copy.deepcopy(p)
+    np = copy.deepcopy(p)
 
-    temp = newPuzzle[row][col]
-    newPuzzle[row][col] = newPuzzle[row + 1][col]  # moving up
-    newPuzzle[row + 1][col] = temp  # swapping
+    temp = np[row][col]
+    np[row][col] = np[row + 1][col]  # moving down
+    np[row + 1][col] = temp  # swapping
 
-    return newPuzzle
+    return np
 
 
 # return new puzzle that blank tile has been moved left
 def moveLeft(p, row, col):
-    newPuzzle = copy.deepcopy(p)
+    np = copy.deepcopy(p)
 
-    temp = newPuzzle[row][col]
-    newPuzzle[row][col] = newPuzzle[row][col - 1]  # moving up
-    newPuzzle[row][col - 1] = temp  # swapping
+    temp = np[row][col]
+    np[row][col] = np[row][col - 1]  # moving left
+    np[row][col - 1] = temp  # swapping
 
-    return newPuzzle
+    return np
 
 
 # return new puzzle that blank tile has been moved right
 def moveRight(p, row, col):
-    newPuzzle = copy.deepcopy(p)
+    np = copy.deepcopy(p)
 
-    temp = newPuzzle[row][col]
-    newPuzzle[row][col] = newPuzzle[row][col + 1]  # moving up
-    newPuzzle[row][col + 1] = temp  # swapping
+    temp = np[row][col]
+    np[row][col] = np[row][col + 1]  # moving right
+    np[row][col + 1] = temp  # swapping
 
-    return newPuzzle
+    return np
 
 # return blank tile position
 def findBlank(state):
@@ -173,7 +169,7 @@ def findBlank(state):
             if state[i][j] == '.':
                 return i, j
             
-    return -1, -1  # return an invalid position if there's no blank tile
+    return -1, -1  # return invalid position if there's no blank tile
 
 # generates and returns all possible children nodes of the given node
 # a child node is generated by moving the blank tile in the problem state in each of the four directions (up, down, left, right), if possible
@@ -199,7 +195,7 @@ def generateChildren(currentNode, visitedNodes):
 
             newChild = Node(copy.deepcopy(newProblem))  
 
-            if newChild.problem not in visitedNodes:  # check if it has been visited
+            if newChild.problem not in visitedNodes:  # check if visited
                 children.append(newChild)
     
     return children
@@ -212,12 +208,7 @@ def checkGoal(puzzle):
 
 # This function is from the psuedo-code in slides provided by Prof. Keogh
 def generalSearch(problem, queueingFunction):
-    # record the time when generalSearch starts running
-    # tstart = time.time()
-    # set the function only to run 1500 seconds
-    # t = 1500
-
-    nodesExpnd = 0  # number of expanded nodes
+    nodesExpnd = 0  # of expanded nodes
     maxQueue = 0  # maximum queue size
     q = []  # priority queue
     
@@ -293,12 +284,6 @@ def generalSearch(problem, queueingFunction):
             if len(q) > maxQueue:
                 maxQueue = len(q)
 
-            # Exit the system if exceeded runtime
-            # if time.time() > tstart + t:
-            #     print('Exceeded runtime..')
-            #     sys.exit()
-
-
 # Node class to store each expanded node
 # problem store the 2D puzzle
 # heuristic stores h(n)
@@ -311,8 +296,6 @@ class Node:
         self.depth = 0
         self.cost = 0
 
-    def __lt__(self, other):  # comparison based on the cost
-        return self.cost < other.cost
 
     def printPuzzle(self):
         print(self.problem[0][0], self.problem[0][1], self.problem[0][2])
@@ -320,6 +303,5 @@ class Node:
         print(self.problem[2][0], self.problem[2][1], self.problem[2][2])
 
 
-        
 if __name__ == "__main__":
     main()

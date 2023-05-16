@@ -6,11 +6,11 @@ cs205 Project1
 This project encompasses the implementation of three algorithms: Uniform Cost Search, A* Misplaced Tile heuristic, and A* Manhattan Distance heuristic. Here, h(n) denotes the heuristic cost and g(n) symbolizes the cost from the starting point to the current node (depth). It's assumed that for Uniform Cost Search, the heuristic cost, h(n), is zero.
 
 
-Uniform Cost Search:
+## Uniform Cost Search:
 Uniform Cost Search operates by expanding the node with the smallest cost every time. In this project, we assign a zero value to h(n) and use only the depth, g(n), as the cost measure. This approach, while thorough, can lead to high time complexity for puzzles of significant depth, as it necessitates the expansion of nodes at every level. In this context, the Uniform Cost Search is functionally equivalent to a Breadth-First Search.
 
 
-A* Misplaced Tile
+## A* Misplaced Tile
 The A* Misplaced Tile heuristic calculates the number of tiles not in their correct position relative to the goal state (excluding tile zero), using this count as the heuristic.
 
 Current State:
@@ -25,7 +25,7 @@ C	A	.
 
 As illustrated in the referenced current/goal states, when comparing the current state to the goal state, only tile 8 is out of place. Consequently, our heuristic, h(n), equals 1. To create this function, I compared each tile in the current state to its counterpart in the goal state. If they matched, I moved to the next tile; if not, I increased the heuristic by 1. This approach was simpler to implement compared to the A* Manhattan Distance heuristic, as it merely involves counting the number of misplaced tiles. Additionally, we maintained the depth, g(n). Assuming a puzzle has 5 misplaced tiles and requires 3 levels of expansion to reach the goal state, our total cost would be 5+3=8.
 
-A* Manhattan Distance
+## A* Manhattan Distance
 The A* Manhattan Distance heuristic measures the total distance each tile (excluding tile zero) must travel to reach its correct location in the goal state. This is conceptually similar to the A* Misplaced Tile heuristic but provides a more nuanced estimate for larger future expansions.
  
 Current State:
